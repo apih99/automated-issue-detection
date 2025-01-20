@@ -1,0 +1,24 @@
+alerting:
+  slack:
+    enabled: true
+    webhook_url: "https://hooks.slack.com/services/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"
+    default_channel: "#project"
+    mention_users:
+      critical: ["@oncall"]
+      high: ["@team-lead"]
+      warning: []
+  email:
+    enabled: true
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    from_address: "hafizcr716@gmail.com"
+    recipients:
+      critical: ["hafizcr716@gmail.com"]
+      high: ["hafizcr716@gmail.com"]
+      warning: ["hafizcr716@gmail.com"]
+  jira:
+    enabled: true
+    server: "https://apih99.atlassian.net/"
+    project_key: "PRJ"
+    issue_type: "Story"
+    labels: ["automated", "monitoring"] 

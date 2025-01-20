@@ -1,0 +1,78 @@
+# Monitoring Configuration
+monitors:
+  prometheus:
+    enabled: false  # Disabled temporarily
+    endpoint: "http://localhost:9090"
+    scrape_interval: 30  # seconds
+    metrics:
+      - name: "http_request_duration_seconds"
+        threshold: 5.0
+        severity: "critical"
+      - name: "error_rate"
+        threshold: 0.05  # 5% error rate
+        severity: "high"
+      - name: "cpu_usage_percent"
+        threshold: 85
+        severity: "warning"
+
+  elasticsearch:
+    enabled: true
+    hosts: ["https://my-elasticsearch-project-a47d61.es.us-east-1.aws.elastic.cloud:443"]
+    indices: ["search-oxl8"]
+    search_interval: 60  # seconds
+    patterns:
+      - pattern: "ERROR"
+        severity: "high"
+      - pattern: "Exception"
+        severity: "high"
+      - pattern: "FATAL"
+        severity: "critical"
+
+# Alert Configuration
+alerting:
+  slack:
+    enabled: true
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    default_channel: "#project"
+    mention_users:
+      critical: ["@oncall"]
+      high: ["@team-lead"]
+      warning: []
+
+  email:
+    enabled: true
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    from_address: "${ALERT_EMAIL_FROM}"
+    recipients:
+      critical: ["hafizcr716@gmail.com"]
+      high: ["hafizcr716@gmail.com"]
+      warning: ["hafizcr716@gmail.com"]
+
+  jira:
+    enabled: true
+    server: "${JIRA_SERVER}"
+    project_key: "PRJ"
+    issue_type: "Task"
+    labels: ["automated", "monitoring"]
+
+# Escalation Rules
+escalation:
+  critical:
+    channels: ["slack", "email", "jira"]
+    wait_time: 0  # immediate
+    auto_resolve: false
+  high:
+    channels: ["slack", "email", "jira"]
+    wait_time: 300  # 5 minutes
+    auto_resolve: true
+  warning:
+    channels: ["slack"]
+    wait_time: 900  # 15 minutes
+    auto_resolve: true
+
+# Audit Trail
+audit:
+  enabled: true
+  log_file: "logs/audit.log"
+  retention_days: 90 
