@@ -1,7 +1,7 @@
 alerting:
   slack:
     enabled: true
-    webhook_url: "https://hooks.slack.com/services/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"
+    webhook_url: "${SLACK_WEBHOOK_URL}"
     default_channel: "#project"
     mention_users:
       critical: ["@oncall"]
