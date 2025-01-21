@@ -1,64 +1,62 @@
 # Automated Issue Detection & Escalation System
 
-A robust monitoring and alerting system that automatically detects issues in application logs and metrics, and escalates critical problems through appropriate channels.
+Intelligent monitoring system that detects issues in Elasticsearch logs and automatically escalates them through Slack, Email, and Jira.
 
-## Features
+## Key Features
 
-- Real-time monitoring of application logs and metrics
-- Automated issue detection using configurable thresholds
-- Integration with multiple data sources (ELK Stack, Prometheus)
-- Intelligent alert routing to Slack and email
-- Jira ticket creation for issue tracking
-- Audit trail for all escalations
-- Configurable alert rules and thresholds
+- Real-time Elasticsearch log monitoring
+- Pattern-based issue detection (ERROR, Exception, FATAL)
+- Multi-channel alerts (Slack, Email, Jira)
+- Severity-based escalation rules
+- Comprehensive audit logging
 
-## Setup
+## Quick Start
 
-1. Clone the repository
-2. Install dependencies:
+1. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
-3. Configure environment variables:
+
+2. **Configure Environment**
    ```bash
    cp .env.example .env
-   # Edit .env with your credentials
+   # Add your credentials to .env:
+   # - Elasticsearch API key
+   # - Slack webhook URL and bot token
+   # - Gmail account with App Password
+   # - Jira API token
    ```
 
-## Configuration
+3. **Update Configuration**
+   - Edit `config.yaml` for:
+     - Alert thresholds
+     - Notification channels
+     - Escalation rules
 
-The system is configured through `config/config.yaml`. Key configurations include:
-- Alert thresholds
-- Notification channels
-- Integration endpoints
-- Escalation rules
+4. **Run the System**
+   ```bash
+   python src/main.py
+   ```
 
-## Usage
+## Directory Structure
+```
+src/
+├── monitors/          # Log monitoring
+├── alerting/         # Alert handling
+└── utils/            # Helper utilities
+```
 
-Start the monitoring service:
+## Testing
+
+Run test logs:
 ```bash
-python src/main.py
+python test_logs.py
 ```
 
-## Project Structure
-
+Verify environment:
+```bash
+python check_env.py
 ```
-.
-├── src/
-│   ├── monitors/         # Monitor implementations
-│   ├── alerting/         # Alert handling
-│   ├── integrations/     # Third-party integrations
-│   └── utils/            # Helper utilities
-├── config/               # Configuration files
-├── tests/                # Test suite
-└── logs/                 # Application logs
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
 
 ## License
 
